@@ -1,0 +1,25 @@
+func TestGetPut(t *testing.T) {
+	t.Run("should get nothing if key does not exist", func(t *testing.T) {
+		trie := NewTrie()
+		_, found := trie.Get([]byte("notexist"))
+		require.Equal(t, false, found)
+	})
+
+	t.Run("should get value if key exist", func(t *testing.T) {
+		trie := NewTrie()
+		trie.Put([]byte{1, 2, 3, 4}, []byte("hello"))
+		val, found := trie.Get([]byte{1, 2, 3, 4})
+		require.Equal(t, true, found)
+		require.Equal(t, val, []byte("hello"))
+	})
+
+	t.Run("should get updated value", func(t *testing.T) {
+		trie := NewTrie()
+		trie.Put([]byte{1, 2, 3, 4}, []byte("hello"))
+		trie.Put([]byte{1, 2, 3, 4}, []byte("world"))
+		val, found := trie.Get([]byte{1, 2, 3, 4})
+		require.Equal(t, true, found)
+		require.Equal(t, val, []byte("world"))
+	})
+}
+}
